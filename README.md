@@ -12,6 +12,11 @@ Note that nil is not an allowed value in an array since it confuses the '#'(leng
 
 Creating a new "array" with extended functionality is quite easy. After the creation you can call the methods mentioned below on it.
 
+## License
+- **MIT LICENSE**
+
+## Credit
+- TheoTown(game)
 
 ### How to use the module
 ``` lua
@@ -103,7 +108,7 @@ Counts how many elements fulfill a given predicate.
 - Usage
 ``` lua
 local a = Array{1, 2, 3, 3}
-local c = a:count(function (v) return v == 3 end end)
+local c = a:count(function (v) return v == 3 end)
 print(c)  --Prints 2
 ```
 
@@ -116,7 +121,7 @@ Returns true iff at least one element matches the given predicate.
 - Usage
 ``` lua
 local a = Array {1, 2, 3}
-print(a:exists(function (k, v) return v == 2 end end)) --Prints true
+print(a:exists(function (k, v) return v == 2 end)) --Prints true
 ```
 
 ### Arr:filter(filterFunction)
@@ -132,28 +137,117 @@ local b = a:filter(function(x) return x % 2 == 1 end) --Keep uneven numbers
 print(tostring(b))  --Prints {1, 3}
 ```
 
-###
-
+### Arr:find(element)
+Returns the index of an object in the array. If the array doesn't contain it the function returns -1.
 - Parameters
-  - 
+  - element: the object to search for.
 - Returns
-  - 
+  - index(int) or key(number/string) of element or -1 if it does not exist
 - Usage
 ``` lua
-  
+local a = Array{'a', 'b', 'c'}
+print(a:find('b'))  --Prints 2
 ```
 
-###
-
+### Arr:forEach(callbackFunction)
+Iterates over all elements of the array and applieds a function on them. This is especially useful to avoid explicit use of a for loop. However, this functional style comes at an allocation and performance cost because of the function. Use it when it suits your needs.
 - Parameters
-  - 
-- Returns
-  - 
+  - callbackFunction: function
 - Usage
 ``` lua
-  
+local a = Array{1, 2, 3}
+for i = 1, #a do --Typical approach
+  print(a[i])
+end
+a:forEach(function(x) print(x) end) --Functional style
 ```
 
+### Arr:isEmpty()
+Returns true if the array is empty. This is equivalent to checking the size size of the array being 0 manually.
+- Returns
+  - boolean: True iff the array is empty.
+- Usage
+``` lua
+local a = Array{}
+print(a:isEmpty()) --Prints true
+```
 
+### Arr:map(mapFunction)
+Maps all elements to a new array using a given function.
+- Parameters
+  - mapFunction: function
+- Returns
+  - Array: the mapped array
+- Usage
+``` lua
+local a = Array{1, 2, 3}
+local b = a:map(function(x) return 2 * x end)
+print(tostring(b))  --Prints {2, 4, 6}
+```
 
+### Arr:pick()
+Returns a random element of the array. it ignores element with keys and check for index range 0 to nth number returned by #table.
+- Returns
+  - data, a randomly selected from array depending on its data type.
+- Usage
+``` lua
+local a = Array{1, 3, 5}
+print(a:pick()) --Prints 1 or 3, or 5 / unknown since random
+```
+
+### Arr:remove(element)
+Removes the first appearance of an object from the array. use `table[key] = nil` to remove the entire element with has key
+- Parameters
+  - element: element Object that should be found and removed.
+- Returns
+  - boolean True if the object was successfully removed
+- Usage
+``` lua
+local a = Array{2, 6}
+print(a:remove(6)) --Prints true
+```
+
+### Arr:removeAt(i)
+Removes the object at a specific index or key.
+- Parameters
+  - i: index or key of the object thay should be removed.
+- Returns
+  - object the backup object/value on that key/index that is removed, return nil if the given index are not found.
+- Usage
+``` lua
+local a = Array{6, 8, true}
+print(a:removeAt(1)) --Prints 6
+print(tostring(a)) -- {8, true}
+```
+
+### Arr:shuffle()
+Shuffles the elements of the array into a random order. The function uses math.random internally so that the result is dependent on the current random seed value. To get different results for different runs you might call math.randomseed(os.time()) at the start of your program.
+
+### Arr:sort([compFunc])
+Uses natural order of the elements in the array to sort them. You can optionally provide your own function for comparing two elements.
+- Parameters
+  - compFunc: The comparison function must return a boolean value specifying whether the first argument should be before the second argument in the array. The default behaviour is ascending order. (optional)
+- Usage
+``` lua
+local arr = Array{1, 5, 0, 6, 1, 3, 2, 4}
+arr:sort()
+print(tostring(arr))  --Prints {0, 1, 1, 2, 3, 4, 5, 6}
+arr:sort(function(a,b) return a > b end)
+print(tostring(arr))  --Prints {6, 5, 4, 3, 2, 1, 1, 0}
+```
+
+### Arr:sub(startIndex[, length])
+Creates a sub-array for the specified range. this was only applicable for array whose keys was 1, 2, 3 and so on.
+- Parameters
+  - startIndex: The index from where to copy.
+  - length: (int) The length of the new array. By default the array will be copied to the end. (optional)
+- Returns
+  - Array: The created sub-array.
+- Usage
+``` lua
+local a = Array{1, 2, 3, 4, 5, 6}
+print(tostring(a))  --Prints {1, 2, 3, 4, 5, 6}
+local b = a:sub(2, 4)
+print(tostring(b))  --Prints {2, 3, 4, 5}
+```
 
