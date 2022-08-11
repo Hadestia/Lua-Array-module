@@ -16,7 +16,7 @@ Creating a new "array" with extended functionality is quite easy. After the crea
 - **MIT LICENSE**
 
 ## Credit
-- TheoTown(game)
+- [TheoTown(game)](https://theotown.com)
 
 ### How to use the module
 ``` lua
