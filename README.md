@@ -6,7 +6,7 @@ Before That, this was already been implemented on TheoTown(city building simulat
 
 Alright this was made as a metatable for array objects and can therefore be applied to arrays without a copy operation.
 
-Technically Lua has no arrays but tables only. The extended functionality added by this module allows you to change size of the array. You can therefore also use it as a list interface.
+Technically Lua has no arrays but tables only. however keys which value 1, 2, 3 and so on was presented as array, but there are some methods that returns the key on a call back function for other usage. The extended functionality added by this module allows you to change size of the array. You can therefore also use it as a list interface.
 
 Note that nil is not an allowed value in an array since it confuses the '#'(length-)operator.
 
@@ -58,7 +58,7 @@ print(tostring(a))  --Prints {3, 1, 2}
 ### Arr:addAll(arr, index)
 Adds an object to the array. An index can be provided to specify a position for insertion.
 - Parameters
-  - arr: Array whose elements should be added.
+  - arr: Array whose elements should be added. the element's keys must be 1, 2, 3, ... to prevent any confusion.
   - index: int Index of where the elements should be inserted. If no index was provided the elements will be appended to the array. (optional)
 - Returns
   - int: starting index of the inserted object.
@@ -181,7 +181,7 @@ Maps all elements to a new array using a given function.
 - Usage
 ``` lua
 local a = Array{1, 2, 3}
-local b = a:map(function(x) return 2 * x end)
+local b = a:map(function(k, x) return k, 2 * x end)
 print(tostring(b))  --Prints {2, 4, 6}
 ```
 
@@ -193,6 +193,14 @@ Returns a random element of the array. it ignores element with keys and check fo
 ``` lua
 local a = Array{1, 3, 5}
 print(a:pick()) --Prints 1 or 3, or 5 / unknown since random
+```
+
+### Arr:print()
+Prints all the keys and values of a single dimensional array.
+- Usage
+``` lua
+local a = Array{1, 3, 5}
+a:print() --Prints 1: 1, 2: 3, 3: 5
 ```
 
 ### Arr:remove(element)
