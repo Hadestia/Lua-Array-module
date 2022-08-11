@@ -1,4 +1,4 @@
-# Lua-Array-module
+# Lua-Array-module v0.1
 
 A set of tools to extend Lua's quite simple arrays with more intuitive, traditional methods.
 
