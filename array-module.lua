@@ -3,7 +3,7 @@
 -- @version       0.1
 -- @description   A set of tools to extend Lua's quite simple arrays with more intuitive, traditional methods.
 -- @author        Hadestia
--- @license       
+-- @license       MIT
 -- @updateUrl     https://raw.github.com/hadestia/lua-array-module/main/array-module.lua
 -- @downloadUrl   https://raw.github.com/hadestia/lua-array-module/main/array-module.lua
 
